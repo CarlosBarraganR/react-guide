@@ -10,12 +10,12 @@ class App extends Component {
     ]
   }
 
-  switchNameHandler = () => {
+  switchNameHandler = (newName) => {
     // DON'T DO THIS: this.state.persons[0].name = 'NewName'; 
     this.setState(
       {
         persons: [
-          { name: 'Mac', age: 22 },
+          { name: newName, age: 22 },
           { name: 'SusyQ', age: 44 }  
         ]
       }
@@ -26,9 +26,16 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Hi I'm a React App</h1>
-        <button onClick={this.switchNameHandler}>Swap Name</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>This is a children Text!</Person>
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>This is a children Text!</Person>
+        {/* The inneficient way to bind data */}
+        <button onClick={() => this.switchNameHandler('MadMax!!!')}>Swap Name</button>
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age}
+          // This is the best way tho bind data
+          click={this.switchNameHandler.bind(this , 'MADMAX')}>This is a children Text!</Person>
+        <Person 
+          name={this.state.persons[1].name} 
+          age={this.state.persons[1].age}/>
       </div>
     );
   }
