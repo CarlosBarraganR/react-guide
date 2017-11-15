@@ -34,11 +34,20 @@ class App extends Component {
   }
 
   render() {
+
+    const customButton = {
+      backgroundColor: 'aqua',
+      font: 'inherit',
+      border: '1px solid #eee',
+      padding: '15px',
+      cursor: 'pointer'
+    }
+
     return (
       <div className="App">
         <h1>Hi I'm a React App</h1>
         {/* The inneficient way to bind data */}
-        <button onClick={() => this.switchNameHandler('MadMax!!!')}>Swap Name</button>
+        <button style={customButton} onClick={() => this.switchNameHandler('MadMax!!!')}>Swap Name</button>
         <Person 
           name={this.state.persons[0].name} 
           age={this.state.persons[0].age}
