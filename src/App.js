@@ -6,6 +6,7 @@ class App extends Component {
   state = {
     persons: [
       { name: 'Pepe', age: 10 },
+      { name: 'Jesus', age: 100 },
       { name: 'Pks', age: 11 }    
     ], 
     showPersons: false
@@ -53,18 +54,18 @@ class App extends Component {
 
     let persons = null;
 
+    //condition to render the Persons component
     if(this.state.showPersons) {
       persons = (
         <div>
-          <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age}
-            // This is the best way tho bind data
-            click={this.switchNameHandler.bind(this , 'MADMAX')}>This is a children Text!</Person>
-          <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              changeName={this.nameChangeHandler}/>
+          {
+            //this is how you render the whole persons inside the array
+            this.state.persons.map(person => {
+              return <Person
+                name = {person.name}
+                age = {person.age}/>
+            })
+          }
         </div>
       );
     }
