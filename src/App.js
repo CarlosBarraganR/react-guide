@@ -80,9 +80,13 @@ class App extends Component {
       );
     }
 
+    const custom_class = [];
+    if(this.state.persons.length <= 2) { custom_class.push('red'); }
+    if(this.state.persons.length <= 1) { custom_class.push('blue'); }
+
     return (
       <div className="App">
-        <h1>Hi I'm a React App</h1>
+        <h1 className={custom_class.join(' ')}>Hi I'm a React App</h1>
         <button style={customButton} onClick={this.tooglePersons}>Show Persons</button>
         {persons}
       </div>
