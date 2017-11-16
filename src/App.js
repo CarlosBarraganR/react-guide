@@ -5,34 +5,43 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Pepe', age: 10 },
-      { name: 'Jesus', age: 100 },
-      { name: 'Pks', age: 11 }    
+      { id:'A0001', name: 'Pepe', age: 10 },
+      { id:'A0002', name: 'Jesus', age: 100 },
+      { id:'A0003', name: 'Pks', age: 11 }    
     ], 
     showPersons: false
   }
 
-  switchNameHandler = (newName) => {
-    // DON'T DO THIS: this.state.persons[0].name = 'NewName'; 
-    this.setState(
-      {
-        persons: [
-          { name: newName, age: 22 },
-          { name: 'SusyQ', age: 44 }  
-        ]
-      }
-    )
+  //1. Fetch and create new state object 2. Delete the item in the index of the object 3. Set New State
+  deletePersonHandler = (personIndex) => {
+    //const persons = this.state.persons; BAD PRACTICE BECAUSE WE NEED TO CREATE A COPY OF THE STATE PERSONS OBJECT
+    //const persons = this.state.persons.splice(); COMMON PRACTICE
+    const persons = [...this.state.persons]; //Spread Operator ftw
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   }
 
-  nameChangeHandler = (event) => {
-    this.setState(
-      {
-        persons: [
-          { name: 'Max', age: 22 },
-          { name: event.target.value, age: 44 }  
-        ]
-      }
-    )
+  //1. Find index of Person you wanna change the name 2. Fetch and create new index state object 3. Set new Name in DOM
+  //4. Fetch and create new state object 5. put new value to the object 6. Set New State with new value 7. PROFIT
+  nameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(person_to_change => {
+      return person_to_change.id === id;
+    })
+
+    const person = {
+      ...this.state.persons[personIndex] 
+    };
+    //const person = Object.assign({}, this.state.persons[personIndex]); //Another Aproach instead of spread operator
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({
+      persons: persons
+    });
+
   }
 
   tooglePersons = () => {
@@ -54,18 +63,19 @@ class App extends Component {
 
     let persons = null;
 
-    //condition to render the Persons component
     if(this.state.showPersons) {
       persons = (
         <div>
           {
-            //this is how you render the whole persons inside the array
-            this.state.persons.map(person => {
+            this.state.persons.map((person, index) => {
               return <Person
+                key = {person.id}
+                click = {() => this.deletePersonHandler(index)}
                 name = {person.name}
-                age = {person.age}/>
+                age = {person.age}
+                changed = {(event) => this.nameChangeHandler(event, person.id)} />
             })
-          }
+          } 
         </div>
       );
     }
@@ -73,7 +83,6 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Hi I'm a React App</h1>
-        {/* The inneficient way to bind data */}
         <button style={customButton} onClick={this.tooglePersons}>Show Persons</button>
         {persons}
       </div>
