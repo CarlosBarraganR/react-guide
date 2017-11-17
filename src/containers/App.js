@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+
 
 class App extends Component {
   state = {
@@ -44,6 +46,7 @@ class App extends Component {
 
   }
 
+  //Method to toggle the the state ofr the showPersons
   tooglePersons = () => {
     const doesShowPersons = this.state.showPersons;
     this.setState({
@@ -53,41 +56,26 @@ class App extends Component {
 
   render() {
 
-    const customButton = {
-      backgroundColor: 'aqua',
-      font: 'inherit',
-      border: '1px solid #eee',
-      padding: '15px',
-      cursor: 'pointer'
-    }
-
     let persons = null;
 
     if(this.state.showPersons) {
       persons = (
         <div>
-          {
-            this.state.persons.map((person, index) => {
-              return <Person
-                key = {person.id}
-                click = {() => this.deletePersonHandler(index)}
-                name = {person.name}
-                age = {person.age}
-                changed = {(event) => this.nameChangeHandler(event, person.id)} />
-            })
-          } 
+          <Persons 
+            clicked = {this.deletePersonHandler}
+            changed = {this.nameChangeHandler}
+            persons = {this.state.persons} 
+          />
         </div>
       );
     }
 
-    const custom_class = [];
-    if(this.state.persons.length <= 2) { custom_class.push('red'); }
-    if(this.state.persons.length <= 1) { custom_class.push('blue'); }
-
     return (
       <div className="App">
-        <h1 className={custom_class.join(' ')}>Hi I'm a React App</h1>
-        <button style={customButton} onClick={this.tooglePersons}>Show Persons</button>
+        <Cockpit
+        titleApp = {this.props.titleApp} 
+        clicked = {this.tooglePersons}
+        />
         {persons}
       </div>
     );
