@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENTS_PRICE = {
     salad: 0.4,
@@ -10,11 +12,6 @@ const INGREDIENTS_PRICE = {
 }
 
 class BurgerBuilder extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {...}
-    // }
-    //CAN STILL BE USED BUT ES6 IMPLEMENTS IT BY DEFAULT AND YOU ONLY NEED TO DECLARE THE STATE
 
     state = {
         ingredients: {
@@ -24,7 +21,12 @@ class BurgerBuilder extends Component {
             meat: 0,
         },
         totalPrice: 4,
-        purchasable: false
+        purchasable: false,
+        purchasing: false
+    }
+
+    setPurchasingStatus= () => {
+        this.setState({purchasing: true});
     }
 
     setPurchaseStatus(isPurchasable) {
@@ -102,11 +104,15 @@ class BurgerBuilder extends Component {
 
         return (
             <div>
+                <Modal visible={this.state.purchasing}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients = { this.state.ingredients }/>
                 <BuildControls 
                     ingredientAdded = { this.addIngredients } 
                     ingredientRemoved = { this.removeIngredients }
                     ingredientsDisabled = { disabledIngredients }
+                    purchasing = { this.setPurchasingStatus }
                     totalPrice = { this.state.totalPrice.toFixed(2) }
                     purchasable = {this.state.purchasable}/>
             </div>
