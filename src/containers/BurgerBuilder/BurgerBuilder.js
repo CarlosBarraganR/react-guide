@@ -25,9 +25,13 @@ class BurgerBuilder extends Component {
         purchasing: false
     }
 
-    setPurchasingStatus= () => {
+    setPurchasingStatus = () => {
         this.setState({purchasing: true});
     }
+
+    disablePurchasingStatus = () => {
+        this.setState({purchasing: false})
+    }  
 
     setPurchaseStatus(isPurchasable) {
         
@@ -104,7 +108,7 @@ class BurgerBuilder extends Component {
 
         return (
             <div>
-                <Modal visible={this.state.purchasing}>
+                <Modal visible={this.state.purchasing} modalClose={this.disablePurchasingStatus}>
                     <OrderSummary ingredients={this.state.ingredients}/>
                 </Modal>
                 <Burger ingredients = { this.state.ingredients }/>

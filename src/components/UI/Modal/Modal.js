@@ -5,7 +5,7 @@ import './Modal.css'
 const modal = (props) => {
     return (
         <div>
-            <Backdrop visible={props.visible}/>
+            <Backdrop visible={props.visible} clicked={props.modalClose}/>
             <div 
                 className="Modal"
                 style={{
