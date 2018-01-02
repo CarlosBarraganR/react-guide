@@ -1,0 +1,16 @@
+.SideNavItems {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.SideNavItems a {
+    color: #FFF;
+    width: 100%;
+    text-decoration: none;
+}
+
+.SideNavItems a.active {
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4c8;
+}

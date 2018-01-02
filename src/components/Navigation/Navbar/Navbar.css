@@ -7,13 +7,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 10px;
     box-sizing: border-box;
     color: #FFF;
     margin-bottom: 60px;
 }
 
-.logo {
-    width: 18%;
+.logoNav {
+    width: 15%;
     cursor: pointer;
+}
+
+@media (max-width: 500px) {
+    .nav {
+        display: none;
+    }
 }
