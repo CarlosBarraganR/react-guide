@@ -1,6 +1,6 @@
 import React from 'react';
 import './Navbar.css';
-import NavItems from '../NavItems/NavItems';
+import NavItems from '../Navbar/NavItems/NavItems';
 import logo from '../../../assets/burger-logo.png';
 
 const Navbar = (props) => (
